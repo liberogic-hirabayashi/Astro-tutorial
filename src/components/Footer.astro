@@ -1,0 +1,40 @@
+---
+import Social from "../components/Social.astro";
+const platform = "github";
+const username = "withastro";
+const primary=" rgb(140, 0, 255)"
+---
+
+<footer class="footer">
+  <div class="footer__inner">
+    <p>
+      詳しくは<a href={`https://www.${platform}.com/${username}`}>{platform}</a
+      >をご確認ください！
+    </p>
+    <div>
+      <Social platform="twitter" username="astrodotbuild" />
+      <Social platform="github" username="withastro" />
+      <Social platform="youtube" username="astrodotbuild" />
+    </div>
+  </div>
+</footer>
+
+<style lang="scss" define:vars={{primary}}>
+  .footer {
+    background-color: var(--primary);
+    padding: 30px 10px;
+    &__inner {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+
+      a {
+        color:#fff;
+      }
+      div {
+        margin-top: 20px;
+      }
+    }
+  }
+</style>

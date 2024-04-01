@@ -1,0 +1,42 @@
+---
+const { frontmatter } = Astro.props;
+---
+
+<div class="md">
+  <div>
+    <h1>{frontmatter.title}</h1>
+    <p>著者: {frontmatter.author}</p>
+  </div>
+<div>
+  <span>Date：{new Date(frontmatter.pubDate).toLocaleString()}</span>
+  <div class="tag">
+    {frontmatter.tags.map((item: any) => <span>{item}</span>)}
+  </div>
+</div>
+</div>
+
+<slot />
+
+<style lang="scss">
+  .md {
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .tag {
+    span {
+      display: inline;
+      padding: 4px;
+      background-color: #333;
+      color: #fff;
+      font-size: 12px;
+    }
+    span + span {
+      margin-left: 20px;
+    }
+  }
+  }
+
+
+</style>

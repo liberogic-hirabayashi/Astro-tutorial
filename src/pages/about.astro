@@ -1,29 +1,114 @@
 ---
+import { prefetch } from "astro:prefetch";
 import Layout from "../layouts/Layout.astro";
+import Link from "../components/Link.astro"
+
+const primary=" rgb(140, 0, 255)"
+const pageTitle = "ABOUT";
+const identity = {
+  firstName: "平林",
+  country: "日本",
+  occupation: "マークアップエンジニア",
+  hobbies: ["猫", "workout", "ギター", "焼き芋"],
+};
+const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "EJS"];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+const message = true;
+const hoge = true;
+
+const skillColor = "skyblue";
+const fontWeight = "bold";
+const fontSize = "20px"
 ---
 
-<Layout title="Astro">
+<Layout title={pageTitle}>
   <main>
-    <body>
-      <a href="/">ホーム</a>
-      <a href="/about/">概要</a>
-      <a href="/blog/">ブログ</a>
-      <h1>私のAstroサイト</h1>
-      <h1>私について</h1>
-      <h2>... そして私の新しいAstroサイトについて！</h2>
-
+      <h1>{pageTitle}</h1>
+      <div class="wrap">
+        <Link/>
+      </div>
+      <h2>新しいAstroサイトについて！</h2>
       <p>
-        私はAstroの入門チュートリアルを進めています。これは私のウェブサイトの2番目のページで、自分で作った初めてのページです！
+        私はAstroの入門チュートリアルを進めています。<br />
+        これは私のウェブサイトの2番目のページで、自分で作った初めてのページです！
       </p>
 
-      <p>
-        このサイトはチュートリアルを進めるにつれて更新されていきます。定期的にチェックして、私の旅の様子を見に来てください！
-      </p>
-    </body>
+      <h3>Profile</h3>
+      <ul>
+        <li>私の名前は{identity.firstName}です。</li>
+        <li>
+          {identity.country}に住んでおり、{
+            identity.occupation
+          }として働いています。
+        </li>
+        <li>
+          私の趣味は
+          {
+            (
+              <ul class="hobbies">
+                {identity.hobbies.map((item: any) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )
+          }
+          です。
+        </li>
+      </ul>
+      <h3>Skill</h3>
+      <ul class="skill">{skills.map((skill) => <li>{skill}</li>)}</ul>
+      {happy && <p>I am happy to be learning Astro! Astroを学べて幸せです！</p>}
+      {
+        finished && (
+          <p>I finished this tutorial! このチュートリアルを終えました！</p>
+        )
+      }
+      {
+        goal === 3 ? (
+          <p>My goal is to finish in 3 days. 3日で終えるのが目標です。</p>
+        ) : (
+          <p>My goal is not 3 days. 3日が目標ではありません。</p>
+        )
+      }
+      {
+        message ? (
+          <div set:html="<p>メッセージがあったら<br>こっちを表示</p>" />
+        ) : (
+          <p>false</p>
+        )
+      }
+      {hoge && <p>フロントエンドを学習中</p>}
   </main>
 </Layout>
 
-<style>
+<style define:vars={{ skillColor,fontWeight,fontSize }} lang="scss">
   main {
+    h2{
+        color: rgb(105, 133, 255);
+    }
+    ul:not(.link) {
+      li {
+        + li {
+          margin-top: 6px;
+        }
+        ul {
+          display: inline-flex;
+          align-items: center;
+          list-style: none;
+          padding-left: 0;
+          li + li {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+    .skill {
+      color: var(--skillColor);
+      font-weight: var(--fontWeight);
+      font-size: var(--fontSize);
+    }
   }
 </style>
