@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const allPosts = await Astro.glob("../post/*.md");
+const tags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat())];
+const pageTitle = "タグインデックス";
+---
+
+<Layout title={pageTitle}>
+  <main>
+    <h2>カテゴリ</h2>
+    <div class="tag">
+      {
+        tags.map((tag) => (
+          <p>
+            <a href={`/tags/${tag}`}>{tag}</a>
+          </p>
+        ))
+      }
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  .tag {
+    display: flex;
+    p {
+      a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+      }
+      + p {
+        margin-left: 20px;
+      }
+    }
+  }
+</style>

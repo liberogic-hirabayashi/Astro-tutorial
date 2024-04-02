@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BlogPost from "../../components/BlogPost.astro";
+
+export async function getStaticPaths() {
+  const allPosts: any = await Astro.glob("../post/*.md");
+  return [
+    { params: { tag: "astro" }, props: { posts: allPosts } },
+    { params: { tag: "成功" }, props: { posts: allPosts } },
+    { params: { tag: "コミュニティ" }, props: { posts: allPosts } },
+    { params: { tag: "ブログ" }, props: { posts: allPosts } },
+    { params: { tag: "後退" }, props: { posts: allPosts } },
+    { params: { tag: "公開学習" }, props: { posts: allPosts } },
+  ];
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+const filteredPosts = posts.filter((post) =>
+  post.frontmatter.tags?.includes(tag)
+);
+---
+
+<Layout title={tag}>
+  <main>
+    <h2>{tag}のタグが付いた記事</h2>
+    <ul>
+      {
+        filteredPosts.map((post) => (
+          <BlogPost url={post.url} title={post.frontmatter.title} />
+        ))
+      }
+    </ul>
+  </main>
+</Layout>
+
+
+
+
+<style>
+    h2{
+        margin-bottom: 40px;
+    }
+  ul {
+    padding-left: 0;
+  }
+</style>
